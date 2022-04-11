@@ -1,13 +1,18 @@
 Package: SCIBER
 Type: Package
-Title: What the Package Does (Title Case)
+Title: SCIBER: Single-Cell Integrator and Batch Effect Remover
 Version: 0.1.0
-Author: Who wrote it
+Author: person("Dailin", "Gan", , "dailin.raven.gan@gmail.com", role = c("aut", "cre"))
 Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Description: Remove batch effects by projecting query batches into the reference batch space.
+License: MIT + file LICENSE
 Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
 LazyData: true
 URL: https://github.com/RavenGan/SCIBER
 BugReports: https://github.com/RavenGan/SCIBER/issues
+Imports: 
+    dplyr,
+    parallel,
+    stats

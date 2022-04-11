@@ -35,3 +35,6 @@ A list of both raw and integrated batches with all batched combined or a list wh
 \description{
 Batch effect removal with SCIBER
 }
+\examples{
+\dontrun{SCIBER_int(batches, index, meta_data, prop, n_core = 8, combine = TRUE)}
+}

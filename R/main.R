@@ -16,8 +16,8 @@ globalVariables(c("cluster_assignment" # used in the newly created metadata
 #' @importFrom dplyr %>%
 #' @export
 #'
-# @examples
-#SCIBER_int(batches_clean, ref_index, batches_meta_data, top_pairs_with_ref, n_core = 8, combine = TRUE)
+#' @examples
+#' \dontrun{SCIBER_int(batches, index, meta_data, prop, n_core = 8, combine = TRUE)}
 SCIBER_int <- function(batches_clean, ref_index,
                        batches_meta_data, top_pairs_prop, top_genes = 50,
                        n_core = parallel::detectCores(), combine = TRUE

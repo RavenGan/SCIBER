@@ -18,7 +18,7 @@ globalVariables(c("cluster_assignment" # used in the newly created metadata
 #' @param batches_clean A list contains all the pre-processed matrices with dimension of n_genes*n_cells.
 #' @param ref_index The index of the reference batch in the object "batches_clean"
 #' @param batches_meta_data A list contains the meta data for all the batches. The order should be consistent with that in "batches_clean"
-#' @param top_pairs_with_ref Proportion of matched clusters. Default uses the 0.05 significance level.
+#' @param top_pairs_prop A list of proportion of matched clusters. Default uses the 0.05 significance level for all clusters.
 #' @param top_genes The number of marker genes used for Fisher exact test.
 #' @param n_core Specify the number of cores otherwise use all the available cores.
 #' @param combine TURE returns both raw and integrated batches with all batched combined. FALSE returns a list which contains all the integrated batches. The default is TRUE.
@@ -30,7 +30,7 @@ globalVariables(c("cluster_assignment" # used in the newly created metadata
 # @examples
 #SCIBER_int(batches_clean, ref_index, batches_meta_data, top_pairs_with_ref, n_core = 8, combine = TRUE)
 SCIBER_int <- function(batches_clean, ref_index,
-                       batches_meta_data, top_pairs_with_ref, top_genes = 50,
+                       batches_meta_data, top_pairs_prop, top_genes = 50,
                        n_core = parallel::detectCores(), combine = TRUE
                        ) {
   datasets_cluster <- obtain_clustered_data(ref_index, batches_clean, numCores = n_core)
@@ -40,9 +40,10 @@ SCIBER_int <- function(batches_clean, ref_index,
   FisherExactTest <- FisherExact_test(batches_p_tstat, obtain_cluster_type, ref_index, top_genes,
                                       numCores = n_core)
   top_pairs_with_ref_summary <- obtain_top_pairs(FisherExactTest,
-                                                 top_pairs_with_ref,
+                                                 top_pairs_prop,
                                                  obtain_cluster_type,
-                                                 ref_index)
+                                                 ref_index,
+                                                 datasets_cluster)
   cellID_from_top_pairs_summary <- obtain_cellID_from_top_pair(top_pairs_with_ref_summary,
                                                                new_meta_data,
                                                                ref_index)

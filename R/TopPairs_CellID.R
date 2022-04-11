@@ -55,19 +55,22 @@ obtain_top_pairs_core <- function(p_value_summary, nPairs, obtain_cluster_type_d
 }
 
 
-obtain_top_pairs <- function(FisherExactTest, top_pairs_with_ref, obtain_cluster_type, ref_index){
+obtain_top_pairs <- function(FisherExactTest, top_pairs_prop = 0.05, obtain_cluster_type, ref_index, datasets_cluster){
   remain_cluster_type <- obtain_cluster_type[-ref_index]
   ref_cluster_type <- obtain_cluster_type[[ref_index]]
-
+  k <- datasets_cluster$k
   top_pairs_with_ref_summary <- c()
-  for (i in 1:length(FisherExactTest)) {
-    chosen_ref_top_pairs <- obtain_top_pairs_core(FisherExactTest[[i]],
-                                                  top_pairs_with_ref[[i]],
-                                                  remain_cluster_type[[i]],
-                                                  ref_cluster_type)
-    top_pairs_with_ref_summary[[i]] <- chosen_ref_top_pairs
+  if(top_pairs_prop != 0.05) {
+    for (i in 1:length(FisherExactTest)) {
+      nPairs <- top_pairs_prop[[i]]*k
+      chosen_ref_top_pairs <- obtain_top_pairs_core(FisherExactTest[[i]],
+                                                    nPairs,
+                                                    remain_cluster_type[[i]],
+                                                    ref_cluster_type)
+      top_pairs_with_ref_summary[[i]] <- chosen_ref_top_pairs
+    }
+    return(top_pairs_with_ref_summary)
   }
-  return(top_pairs_with_ref_summary)
 }
 
 

@@ -79,7 +79,6 @@ obtain_proj_to_ref <- function(anchor_matrices_summary, batches_clean, ref_index
   for (i in 1:length(anchor_matrices_summary)) {
     projected_datasets_summary[[i]] <- obtain_proj_to_ref_core(anchor_matrices_summary[[i]],
                                                                remain_batches_clean[[i]])
-    print("Check point---------------------------------------------------------")
   }
   return(projected_datasets_summary)
 }

@@ -49,15 +49,13 @@ top_pairs_prop[[1]] <- 0.6
 test <- SCIBER_int(batches_clean, ref_index, batches_meta_data,
                    top_pairs_prop, top_genes, n_core = parallel::detectCores(),
                    combine = TRUE)
-#> [1] "Check point---------------------------------------------------------"
 
 
-# Use significance level
+# Use significance level to integrate batches.
 top_pairs_prop <- 0.05
 test2 <- SCIBER_int(batches_clean, ref_index, batches_meta_data,
                    top_pairs_prop, top_genes, n_core = parallel::detectCores(),
                    combine = TRUE)
-#> [1] "Check point---------------------------------------------------------"
 ```
 
 <!-- What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so: -->

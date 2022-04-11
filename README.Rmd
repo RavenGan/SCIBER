@@ -22,7 +22,7 @@ SCIBER is a simple method that outputs the batch-effect corrected expression dat
 
 ## Installation
 
-You can install the development version of SCIBER with:
+You can install the development version of SCIBER with the following instructions:
 
 ``` r
 # install.packages("devtools")

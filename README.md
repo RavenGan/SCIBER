@@ -16,7 +16,8 @@ comprehensible
 
 ## Installation
 
-You can install the development version of SCIBER with:
+You can install the development version of SCIBER with the following
+instructions:
 
 ``` r
 # install.packages("devtools")

@@ -6,7 +6,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of SCIBER is to …
+The goal of SCIBER is to remove batch effects
 
 ## Installation
 

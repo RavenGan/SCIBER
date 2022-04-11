@@ -1,7 +1,7 @@
 Package: SCIBER
 Type: Package
 Title: SCIBER: Single-Cell Integrator and Batch Effect Remover
-Version: 0.1.0
+Version: 0.1.1
 Author: person("Dailin", "Gan", , "dailin.raven.gan@gmail.com", role = c("aut", "cre"))
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: Remove batch effects by projecting query batches into the reference batch space.

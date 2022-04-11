@@ -8,7 +8,7 @@ SCIBER_int(
   batches_clean,
   ref_index,
   batches_meta_data,
-  top_pairs_with_ref,
+  top_pairs_prop,
   top_genes = 50,
   n_core = parallel::detectCores(),
   combine = TRUE
@@ -21,7 +21,7 @@ SCIBER_int(
 
 \item{batches_meta_data}{A list contains the meta data for all the batches. The order should be consistent with that in "batches_clean"}
 
-\item{top_pairs_with_ref}{Proportion of matched clusters. Default uses the 0.05 significance level.}
+\item{top_pairs_prop}{A list of proportion of matched clusters. Default uses the 0.05 significance level for all clusters.}
 
 \item{top_genes}{The number of marker genes used for Fisher exact test.}
 

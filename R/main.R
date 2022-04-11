@@ -1,15 +1,4 @@
 
-# input:
-# 1. batches_clean: a list contains all the pre-processed matrices.
-# 2. ref_index: the index of the reference batch in the object "batches_clean"
-# 3. batches_meta_data: a list contains the meta data for all the batches.
-#    The order should be consistent with that in "batches_clean"
-# 4. top_pairs_with_ref: proportion of matched clusters.
-#    Default uses the 0.05 significance level.
-# 5. n_core: specify the number of cores otherwise use all the available cores.
-# 6. combine: TURE returns both raw and integrated batches with all batched combined.
-#    FALSE returns a list which contains all the integrated batches. The default is TRUE.
-
 globalVariables(c("cluster_assignment" # used in the newly created metadata
                   ))
 

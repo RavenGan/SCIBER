@@ -25,7 +25,8 @@ devtools::install_github("RavenGan/SCIBER")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+The following example uses the pre-processed Human dendritic cell
+dataset to perform batch integration.
 
 ``` r
 library(SCIBER)
@@ -42,7 +43,7 @@ batches_meta_data <- meta
 ref_index <- 1
 top_genes <- 50
 
-# Specified proportion for the query batch
+# Specify the proportion for each query batch to integrate batches.
 top_pairs_prop <- c()
 top_pairs_prop[[1]] <- 0.6
 
@@ -57,6 +58,13 @@ test2 <- SCIBER_int(batches_clean, ref_index, batches_meta_data,
                    top_pairs_prop, top_genes, n_core = parallel::detectCores(),
                    combine = TRUE)
 ```
+
+## Dataset reference
+
+Villani, A. C., Satija, R., Reynolds, G., Sarkizova, S., Shekhar, K.,
+Fletcher, J., … & Hacohen, N. (2017). Single-cell RNA-seq reveals new
+types of human blood dendritic cells, monocytes, and progenitors.
+Science, 356(6335), eaah4573.
 
 <!-- What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so: -->
 <!-- ```{r cars} -->

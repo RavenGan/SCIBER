@@ -1,6 +1,6 @@
 Package: SCIBER
 Type: Package
-Title: SCIBER: Single-Cell Integrator and Batch Effect Remover
+Title: Single-Cell Integrator and Batch Effect Remover
 Version: 0.1.1
 Author: Dailin Gan
 Maintainer: Dailin Gan <dailin.raven.gan@gmail.com>

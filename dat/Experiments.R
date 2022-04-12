@@ -27,3 +27,13 @@ top_pairs_prop <- 0.05
 test2 <- SCIBER_int(batches_clean, ref_index, batches_meta_data,
                    top_pairs_prop, top_genes, n_core = parallel::detectCores(),
                    combine = TRUE)
+
+
+m <- c(1, 2, 3)
+n <- c(1, 2)
+if(length(m) != length(n)){
+  stop(paste0("Stop here ", 1, " LOL"))
+} else {
+  print(m + n)
+}
+

@@ -124,9 +124,9 @@ obtain_projected_original_data <- function(projected_datasets_summary, batches_c
   for (i in 1:length(batches_clean)) {
     if (i < ref_index){
       projected_data_ls[[i]] <- projected_datasets_summary[[i]]
-    } elseif (i == ref_index){
+    } else if (i == ref_index){
       projected_data_ls[[i]] <- as.matrix(ref_batch_clean)
-    } elseif (i > ref_index){
+    } else if (i > ref_index){
       projected_data_ls[[i]] <- projected_datasets_summary[[i-1]]
     }
   }

@@ -5,36 +5,42 @@
 \title{Batch effect removal with SCIBER}
 \usage{
 SCIBER_int(
-  batches_clean,
-  ref_index,
-  batches_meta_data,
-  top_pairs_prop,
-  top_genes = 50,
+  input_batches,
+  ref_index = NULL,
+  batches_meta_data = NULL,
+  omega = NULL,
+  alpha = 0.05,
+  h_fisher = 50,
   n_core = parallel::detectCores(),
-  combine = TRUE
+  seed = 7,
+  k = NULL
 )
 }
 \arguments{
-\item{batches_clean}{A list contains all the pre-processed matrices with dimension of n_genes*n_cells.}
+\item{input_batches}{A list contains all the pre-processed matrices with dimension of n_genes*n_cells.}
 
-\item{ref_index}{The index of the reference batch in the object "batches_clean"}
+\item{ref_index}{The index of the reference batch in the object "input_batches"}
 
-\item{batches_meta_data}{A list contains the meta data for all the batches. The order should be consistent with that in "batches_clean"}
+\item{batches_meta_data}{A list contains the meta data for all the batches. The order should be consistent with that in "input_batches". Each meta data contains three columns, "cell_id", "cell_type", and "dataset". "dataset" indicates which batch the data comes from. The row names of meta data should match the column names of batch.}
 
-\item{top_pairs_prop}{A list of proportion of matched clusters. Default uses the 0.05 significance level for all clusters.}
+\item{omega}{A list of proportion of matched clusters.}
 
-\item{top_genes}{The number of marker genes used for Fisher exact test.}
+\item{alpha}{The significance level for all clusters to choose the number of matched clusters. The default is 0.05.}
+
+\item{h_fisher}{The number of marker genes used for Fisher exact test.}
 
 \item{n_core}{Specify the number of cores otherwise use all the available cores.}
 
-\item{combine}{TURE returns both raw and integrated batches with all batched combined. FALSE returns a list which contains all the integrated batches. The default is TRUE.}
+\item{seed}{random seed.}
+
+\item{k}{Number of clusters used for K-means. If not provided, the default is k = the square root of n_0, where n_0 is the number of cells in the reference batch.}
 }
 \value{
-A list of both raw and integrated batches with all batched combined or a list which contains all the integrated batches.
+A list which contains the reference and batch-effect-corrected batches. The order is the same as that in input_batches.
 }
 \description{
 Batch effect removal with SCIBER
 }
 \examples{
-\dontrun{SCIBER_int(batches, index, meta_data, prop, n_core = 8, combine = TRUE)}
+\dontrun{SCIBER_int(input_batches, index, meta_data, prop, n_core = 8, combine = TRUE)}
 }

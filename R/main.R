@@ -68,7 +68,7 @@ SCIBER_int <- function(input_batches,
         }
       }
     }
-  } elseif (is.null(batches_meta_data)){
+  } else if (is.null(batches_meta_data)){
     print("The meta data for each batch is not provided and hence a pseudo meta data is created for each batch.")
     # 2. If batches_meta_data is not provided, create a pseudo meta_data
     batches_meta_data <- c()
@@ -92,7 +92,7 @@ SCIBER_int <- function(input_batches,
   # If omega is not provided
   if (is.null(omega)){
     top_pairs_prop <- alpha # Use the significance level to choose top pairs.
-  } elseif (!is.null(omega)){
+  } else if (!is.null(omega)){
     # If omega is provided, use omega to choose top pairs.
     if ((length(omega)+1) != length(input_batches)){
       stop("The length of ", omega, " does not match the number of query batches.")

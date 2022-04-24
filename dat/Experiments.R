@@ -1,6 +1,7 @@
 rm(list = ls())
 set.seed(7)
-batches_clean <- readRDS("./dat/HumanDC_exp.rds")
+library(SCIBER)
+input_batches <- readRDS("./dat/HumanDC_exp.rds")
 meta <- readRDS("./dat/HumanDC_meta.rds")
 meta_1 <- meta[[1]]
 meta_2 <- meta[[2]]
@@ -11,29 +12,44 @@ batches_meta_data <- meta
 
 ref_index <- 1
 
-top_genes <- 50
+h_fisher <- 50
 
 # Specified proportion for the query batch
-top_pairs_prop <- c()
-top_pairs_prop[[1]] <- 0.6
+omega <- c()
+omega[[1]] <- 0.6
 
-test <- SCIBER_int(batches_clean, ref_index, batches_meta_data,
-                   top_pairs_prop, top_genes, n_core = parallel::detectCores(),
-                   combine = TRUE)
-
-
-# Use significance level
-top_pairs_prop <- 0.05
-test2 <- SCIBER_int(batches_clean, ref_index, batches_meta_data,
-                   top_pairs_prop, top_genes, n_core = parallel::detectCores(),
-                   combine = TRUE)
+test <- SCIBER_int(input_batches, ref_index, batches_meta_data,
+                   omega, h_fisher, n_core = parallel::detectCores())
 
 
-m <- c(1, 2, 3)
-n <- c(1, 2)
-if(length(m) != length(n)){
-  stop(paste0("Stop here ", 1, " LOL"))
-} else {
-  print(m + n)
-}
+# Remove ref_index
+test2 <- SCIBER_int(input_batches = input_batches,
+                    # ref_index,
+                    batches_meta_data = batches_meta_data,
+                   omega = omega,
+                   h_fisher = h_fisher,
+                   n_core = parallel::detectCores())
 
+# Remove meta_data
+test3 <- SCIBER_int(input_batches = input_batches,
+                    # ref_index,
+                    # batches_meta_data = batches_meta_data,
+                    omega = omega,
+                    h_fisher = h_fisher,
+                    n_core = parallel::detectCores())
+
+# Remove omega
+test3 <- SCIBER_int(input_batches = input_batches,
+                    # ref_index,
+                    # batches_meta_data = batches_meta_data,
+                    # omega = omega,
+                    h_fisher = h_fisher,
+                    n_core = parallel::detectCores())
+
+# Check number of cores
+test4 <- SCIBER_int(input_batches = input_batches,
+                    # ref_index,
+                    # batches_meta_data = batches_meta_data,
+                    # omega = omega,
+                    h_fisher = h_fisher,
+                    n_core = 2)

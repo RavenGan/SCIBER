@@ -36,6 +36,7 @@ SCIBER_int <- function(input_batches,
   # Check ref_index----
   # If ref_index is not provided, use the batch with the largest number of cells as the reference.
   if (is.null(ref_index)){
+    print("ref_index is not provided and use the batch with the largest number of cells as the reference.")
     n_cells <- c()
     for (i in 1:length(input_batches)) {
       n_cells <- append(n_cells, ncol(input_batches[[i]]))
@@ -82,8 +83,8 @@ SCIBER_int <- function(input_batches,
   # Check the number of cores used
   core_avail <- parallel::detectCores()
   if (core_avail < n_core) {
-    n_core <- core_avail
     print(paste0("The available number of cores is ", core_avail, " which is smaller than the specified ", n_core, " cores. SCIBER uses ", core_avail, " cores instead."))
+    n_core <- core_avail
   } else {
     print(paste0("The available number of cores is ", core_avail, ". SCIBER uses ", n_core, " to perform batch effect removal."))
   }

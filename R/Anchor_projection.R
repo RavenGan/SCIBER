@@ -83,42 +83,54 @@ obtain_proj_to_ref <- function(anchor_matrices_summary, batches_clean, ref_index
   return(projected_datasets_summary)
 }
 
-obtain_projected_original_data <- function(projected_datasets_summary, batches_clean, ref_index,
-                                           combine = TRUE){
-  if (combine == TRUE){
-    ref_batch_clean <- batches_clean[[ref_index]]
-    remain_batches_clean <- batches_clean[-ref_index]
-
-    projected_data_1 <- projected_datasets_summary[[1]]
-    original_data_1 <- remain_batches_clean[[1]]
-
-    if (length(projected_datasets_summary) <= 1){
-      total_projected_data <- cbind(projected_data_1, ref_batch_clean)
-      total_original_data <- cbind(original_data_1, ref_batch_clean)
-    } else if (length(projected_datasets_summary) == 2){
-      total_projected_data <- cbind(projected_data_1, projected_datasets_summary[[2]])%>%
-        cbind(ref_batch_clean)
-      total_original_data <- cbind(original_data_1, remain_batches_clean[[2]])%>%
-        cbind(ref_batch_clean)
+obtain_projected_original_data <- function(projected_datasets_summary, batches_clean, ref_index
+                                           # ,combine = TRUE
+                                           ){
+  # if (combine == TRUE){
+  #   ref_batch_clean <- batches_clean[[ref_index]]
+  #   remain_batches_clean <- batches_clean[-ref_index]
+  #
+  #   projected_data_1 <- projected_datasets_summary[[1]]
+  #   original_data_1 <- remain_batches_clean[[1]]
+  #
+  #   if (length(projected_datasets_summary) <= 1){
+  #     total_projected_data <- cbind(projected_data_1, ref_batch_clean)
+  #     total_original_data <- cbind(original_data_1, ref_batch_clean)
+  #   } else if (length(projected_datasets_summary) == 2){
+  #     total_projected_data <- cbind(projected_data_1, projected_datasets_summary[[2]])%>%
+  #       cbind(ref_batch_clean)
+  #     total_original_data <- cbind(original_data_1, remain_batches_clean[[2]])%>%
+  #       cbind(ref_batch_clean)
+  #   }
+  #   else if (length(projected_datasets_summary) >= 3){
+  #     total_projected_data <- cbind(projected_data_1, projected_datasets_summary[[2]])
+  #     total_original_data <- cbind(original_data_1, remain_batches_clean[[2]])
+  #     for (i in 3:length(projected_datasets_summary)) {
+  #       total_projected_data <- cbind(total_projected_data, projected_datasets_summary[[i]])
+  #       total_original_data <- cbind(total_original_data, remain_batches_clean[[i]])
+  #     }
+  #     total_projected_data <- as.matrix(total_projected_data %>% cbind(ref_batch_clean))
+  #     total_original_data <- as.matrix(total_original_data %>% cbind(ref_batch_clean))
+  #   }
+  #   return(list("total_projected_data" = total_projected_data, "total_original_data" = total_original_data))
+  # } else if (combine == FALSE){
+  #   ref_batch_clean <- batches_clean[[ref_index]]
+  #   projected_data_ls <- projected_datasets_summary
+  #   projected_data_ls[[(length(projected_datasets_summary)+1)]] <- as.matrix(ref_batch_clean)
+  #   return(projected_data_ls)
+  # }
+  ref_batch_clean <- batches_clean[[ref_index]]
+  projected_data_ls <- c()
+  for (i in 1:length(batches_clean)) {
+    if (i < ref_index){
+      projected_data_ls[[i]] <- projected_datasets_summary[[i]]
+    } elseif (i == ref_index){
+      projected_data_ls[[i]] <- as.matrix(ref_batch_clean)
+    } elseif (i > ref_index){
+      projected_data_ls[[i]] <- projected_datasets_summary[[i-1]]
     }
-    else if (length(projected_datasets_summary) >= 3){
-      total_projected_data <- cbind(projected_data_1, projected_datasets_summary[[2]])
-      total_original_data <- cbind(original_data_1, remain_batches_clean[[2]])
-      for (i in 3:length(projected_datasets_summary)) {
-        total_projected_data <- cbind(total_projected_data, projected_datasets_summary[[i]])
-        total_original_data <- cbind(total_original_data, remain_batches_clean[[i]])
-      }
-      total_projected_data <- as.matrix(total_projected_data %>% cbind(ref_batch_clean))
-      total_original_data <- as.matrix(total_original_data %>% cbind(ref_batch_clean))
-    }
-    return(list("total_projected_data" = total_projected_data, "total_original_data" = total_original_data))
-  } else if (combine == FALSE){
-    ref_batch_clean <- batches_clean[[ref_index]]
-    projected_data_ls <- projected_datasets_summary
-    projected_data_ls[[(length(projected_datasets_summary)+1)]] <- as.matrix(ref_batch_clean)
-    return(projected_data_ls)
   }
-
+  return(projected_data_ls)
 }
 
 

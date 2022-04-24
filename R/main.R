@@ -7,26 +7,32 @@ globalVariables(c("cluster_assignment" # used in the newly created metadata
 #' @param input_batches A list contains all the pre-processed matrices with dimension of n_genes*n_cells.
 #' @param ref_index The index of the reference batch in the object "input_batches"
 #' @param batches_meta_data A list contains the meta data for all the batches. The order should be consistent with that in "input_batches". Each meta data contains three columns, "cell_id", "cell_type", and "dataset". "dataset" indicates which batch the data comes from. The row names of meta data should match the column names of batch.
-#' @param top_pairs_prop A list of proportion of matched clusters. Default uses the 0.05 significance level for all clusters.
+#' @param omega A list of proportion of matched clusters.
+#' @param alpha The significance level for all clusters to choose the number of matched clusters. The default is 0.05.
 #' @param h_fisher The number of marker genes used for Fisher exact test.
 #' @param n_core Specify the number of cores otherwise use all the available cores.
-#' @param combine TURE returns both raw and integrated batches with all batched combined. FALSE returns a list which contains all the integrated batches. The default is TRUE.
+#' @param seed random seed.
+#' @param k Number of clusters used for K-means. If not provided, the default is k = the square root of n_0, where n_0 is the number of cells in the reference batch.
 #'
-#' @return A list of both raw and integrated batches with all batched combined or a list which contains all the integrated batches.
+#' @return A list which contains the reference and batch-effect-corrected batches. The order is the same as that in input_batches.
 #' @importFrom dplyr %>%
 #' @export
 #'
 #' @examples
 #' \dontrun{SCIBER_int(input_batches, index, meta_data, prop, n_core = 8, combine = TRUE)}
-# Input number of clusters "k".
+
 SCIBER_int <- function(input_batches,
                        ref_index = NULL,
                        batches_meta_data = NULL,
-                       top_pairs_prop,
+                       omega = NULL,
+                       alpha = 0.05,
                        h_fisher = 50,
                        n_core = parallel::detectCores(),
-                       combine = TRUE
+                       seed = 7,
+                       k = NULL
                        ) {
+  set.seed(seed)
+
   # Check ref_index----
   # If ref_index is not provided, use the batch with the largest number of cells as the reference.
   if (is.null(ref_index)){
@@ -82,8 +88,30 @@ SCIBER_int <- function(input_batches,
     print(paste0("The available number of cores is ", core_avail, ". SCIBER uses ", n_core, " to perform batch effect removal."))
   }
 
+  # Check the top_pairs_prop
+  # If omega is not provided
+  if (is.null(omega)){
+    top_pairs_prop <- alpha # Use the significance level to choose top pairs.
+  } elseif (!is.null(omega)){
+    # If omega is provided, use omega to choose top pairs.
+    if ((length(omega)+1) != length(input_batches)){
+      stop("The length of ", omega, " does not match the number of query batches.")
+    } else {
+      top_pairs_prop <- omega
+    }
+  }
 
-  datasets_cluster <- obtain_clustered_data(ref_index, input_batches, numCores = n_core)
+  # Check whether k is provided.
+  if (!is.null(k)){
+    K <- k
+  } else {
+    K = NULL
+  }
+
+
+
+
+  datasets_cluster <- obtain_clustered_data(ref_index, input_batches, K, numCores = n_core)
   new_meta_data <- obtain_new_meta_data(datasets_cluster, batches_meta_data)
   obtain_cluster_type <- obtain_cluster_type(new_meta_data)
   batches_p_tstat <- obtain_tstat_pvalue(datasets_cluster, input_batches, numCores = n_core)
@@ -100,7 +128,7 @@ SCIBER_int <- function(input_batches,
   anchor_matrices_summary <- obtain_anchor_matrices(cellID_from_top_pairs_summary, input_batches, ref_index)
   projected_datasets_summary <- obtain_proj_to_ref(anchor_matrices_summary, input_batches, ref_index)
   projected_original_data <- obtain_projected_original_data(projected_datasets_summary, input_batches,
-                                                            ref_index, combine = combine)
+                                                            ref_index)
 
   return(projected_original_data)
 }

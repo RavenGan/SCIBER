@@ -4,13 +4,17 @@
 # obtain_new_meta_data: obtain new meta_data for each batch
 #------#------#------#------#------#------#------#------#------#------
 
-obtain_clustered_data <- function(ref_index, batches_clean, numCores = parapllel::detectCores()){
+obtain_clustered_data <- function(ref_index, batches_clean, K, numCores = parapllel::detectCores()){
   numCores <- numCores
   num_bat <- length(batches_clean)
 
   bat_idxes <- c(1:num_bat)
   # obtain k
-  k <- floor(sqrt(ncol(batches_clean[[ref_index]]))) # Use the reference batch to choose k
+  if (is.null(K)){
+    k <- floor(sqrt(ncol(batches_clean[[ref_index]]))) # Use the reference batch to choose k
+  } else {
+    k <- K
+  }
 
   seed_ls <- c(1:15)
   clean_batch_cluster <- c()

@@ -102,7 +102,7 @@ obtain_top_pairs_core2 <- function(p_value_summary, sig_level, obtain_cluster_ty
 
 
 
-obtain_top_pairs <- function(FisherExactTest, top_pairs_prop = 0.05, obtain_cluster_type, ref_index, datasets_cluster){
+obtain_top_pairs <- function(FisherExactTest, top_pairs_prop, obtain_cluster_type, ref_index, datasets_cluster){
   remain_cluster_type <- obtain_cluster_type[-ref_index]
   ref_cluster_type <- obtain_cluster_type[[ref_index]]
   k <- datasets_cluster$k

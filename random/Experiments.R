@@ -3,11 +3,6 @@ set.seed(7)
 library(SCIBER)
 input_batches <- readRDS("./dat/HumanDC_exp.rds")
 meta <- readRDS("./dat/HumanDC_meta.rds")
-meta_1 <- meta[[1]]
-meta_2 <- meta[[2]]
-meta_data <- rbind(meta_1, meta_2)
-rownames(meta_data) <- meta_data$cell_id
-
 batches_meta_data <- meta
 
 ref_index <- 1
@@ -53,3 +48,20 @@ test4 <- SCIBER_int(input_batches = input_batches,
                     # omega = omega,
                     h_fisher = h_fisher,
                     n_core = 2)
+
+
+x <- sample(1000)
+usethis::use_data(x, mtcars)
+
+load("./data/x.rda")
+load("./data/mtcars.rda")
+
+
+
+HumanDC_exp <- readRDS("./dat/HumanDC_exp.rds")
+HumanDC_meta <- readRDS("./dat/HumanDC_meta.rds")
+HumanDC <- list(exp = HumanDC_exp,
+             metadata = HumanDC_meta)
+
+
+usethis::use_data(HumanDC)

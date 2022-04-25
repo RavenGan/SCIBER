@@ -42,5 +42,11 @@ A list which contains the reference and batch-effect-corrected batches. The orde
 Batch effect removal with SCIBER
 }
 \examples{
-\dontrun{SCIBER_int(input_batches, index, meta_data, prop, n_core = 8, combine = TRUE)}
+data(HumanDC)
+exp <- HumanDC[["exp"]]
+meta <- HumanDC[["metadata"]]
+omega <- c()
+omega[[1]] <- 0.6
+res <- SCIBER_int(input_batches = exp, ref_index = 1,
+batches_meta_data = meta, omega = omega, n_core = 2)
 }

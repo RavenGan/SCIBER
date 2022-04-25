@@ -19,7 +19,13 @@ globalVariables(c("cluster_assignment" # used in the newly created metadata
 #' @export
 #'
 #' @examples
-#' \dontrun{SCIBER_int(input_batches, index, meta_data, prop, n_core = 8, combine = TRUE)}
+#' data(HumanDC)
+#' exp <- HumanDC[["exp"]]
+#' meta <- HumanDC[["metadata"]]
+#' omega <- c()
+#' omega[[1]] <- 0.6
+#' res <- SCIBER_int(input_batches = exp, ref_index = 1,
+#' batches_meta_data = meta, omega = omega, n_core = 2)
 
 SCIBER_int <- function(input_batches,
                        ref_index = NULL,

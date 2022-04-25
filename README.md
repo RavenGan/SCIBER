@@ -33,31 +33,17 @@ dataset \[1\] to perform batch integration.
 library(SCIBER)
 rm(list = ls())
 set.seed(7)
-batches_clean <- readRDS("./dat/HumanDC_exp.rds")
-meta <- readRDS("./dat/HumanDC_meta.rds")
-meta_1 <- meta[[1]]
-meta_2 <- meta[[2]]
-meta_data <- rbind(meta_1, meta_2)
-rownames(meta_data) <- meta_data$cell_id
-
-batches_meta_data <- meta
-ref_index <- 1
-top_genes <- 50
+data(HumanDC)
+exp <- HumanDC[["exp"]]
+meta <- HumanDC[["metadata"]]
 
 # Specify the proportion for each query batch to integrate batches.
-top_pairs_prop <- c()
-top_pairs_prop[[1]] <- 0.6
+omega <- c()
+omega[[1]] <- 0.6
 
-test <- SCIBER_int(batches_clean, ref_index, batches_meta_data,
-                   top_pairs_prop, top_genes, n_core = parallel::detectCores(),
-                   combine = TRUE)
-
-
-# Use significance level to integrate batches.
-top_pairs_prop <- 0.05
-test2 <- SCIBER_int(batches_clean, ref_index, batches_meta_data,
-                   top_pairs_prop, top_genes, n_core = parallel::detectCores(),
-                   combine = TRUE)
+res <- SCIBER_int(input_batches = exp, ref_index = 1,
+batches_meta_data = meta, omega = omega, n_core = 1)
+#> [1] "The available number of cores is 10. SCIBER uses 1 to perform batch effect removal."
 ```
 
 ## Dataset reference

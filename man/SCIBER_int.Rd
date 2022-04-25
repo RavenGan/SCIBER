@@ -48,5 +48,5 @@ meta <- HumanDC[["metadata"]]
 omega <- c()
 omega[[1]] <- 0.6
 res <- SCIBER_int(input_batches = exp, ref_index = 1,
-batches_meta_data = meta, omega = omega, n_core = 2)
+batches_meta_data = meta, omega = omega, n_core = 1)
 }

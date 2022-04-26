@@ -98,11 +98,22 @@ SCIBER_int <- function(input_batches,
   # Check the top_pairs_prop
   # If omega is not provided
   if (is.null(omega)){
-    top_pairs_prop <- alpha # Use the significance level to choose top pairs.
+    if((0 < alpha) & (alpha < 1)){
+      top_pairs_prop <- alpha # Use the significance level to choose top pairs.
+    } else {
+      stop("The provided alpha is not within 0 and 1")
+    }
   } else if (!is.null(omega)){
     # If omega is provided, use omega to choose top pairs.
-    if ((length(omega)+1) != length(input_batches)){
+    omega_ls <- c()
+    for (i in 1:length(omega)) {
+      omega_ls <- append(omega_ls, omega[[i]])
+    }
+
+    if ((length(omega_ls)+1) != length(input_batches)){
       stop("The length of ", omega, " does not match the number of query batches.")
+    } else if (!all(0 < omega_ls & omega_ls < 1)){
+      stop("Some omega(s) is(are) not within the range (0, 1)")
     } else {
       top_pairs_prop <- omega
     }
@@ -110,7 +121,11 @@ SCIBER_int <- function(input_batches,
 
   # Check whether k is provided.
   if (!is.null(k)){
-    K <- k
+    if (k%%1 == 0){
+      K <- k
+    } else {
+      stop("The provided k is not an integer")
+    }
   } else {
     K = NULL
   }

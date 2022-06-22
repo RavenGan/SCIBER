@@ -7,7 +7,7 @@ globalVariables(c("cluster_assignment" # used in the newly created metadata
 #' @param input_batches A list contains all the pre-processed matrices with dimension of n_genes*n_cells.
 #' @param ref_index The index of the reference batch in the object "input_batches"
 #' @param batches_meta_data A list contains the meta data for all the batches. The order should be consistent with that in "input_batches". Each meta data contains three columns, "cell_id", "cell_type", and "dataset". "dataset" indicates which batch the data comes from. The row names of meta data should match the column names of batch.
-#' @param omega A list of proportion of matched clusters.
+#' @param omega A list of proportion of matched clusters or a single value between 0 and 1 applied to all query batches.
 #' @param alpha The significance level for all clusters to choose the number of matched clusters. The default is 0.05.
 #' @param h_fisher The number of marker genes used for Fisher exact test.
 #' @param n_core Specify the number of cores otherwise use all the available cores.
@@ -24,13 +24,13 @@ globalVariables(c("cluster_assignment" # used in the newly created metadata
 #' meta <- HumanDC[["metadata"]]
 #' omega <- c()
 #' omega[[1]] <- 0.6
-#' res <- SCIBER_int(input_batches = exp, ref_index = 1,
+#' res <- SCIBER(input_batches = exp, ref_index = 1,
 #' batches_meta_data = meta, omega = omega, n_core = 1)
 
 SCIBER <- function(input_batches,
                        ref_index = NULL,
                        batches_meta_data = NULL,
-                       omega = NULL,
+                       omega = 0.5,
                        alpha = 0.05,
                        h_fisher = 50,
                        n_core = parallel::detectCores(),
@@ -95,6 +95,7 @@ SCIBER <- function(input_batches,
     print(paste0("The available number of cores is ", core_avail, ". SCIBER uses ", n_core, " to perform batch effect removal."))
   }
 
+
   # Check the top_pairs_prop
   # If omega is not provided
   if (is.null(omega)){
@@ -103,8 +104,18 @@ SCIBER <- function(input_batches,
     } else {
       stop("The provided alpha is not within 0 and 1")
     }
-  } else if (!is.null(omega)){
+  } else if (is.numeric(omega)){
     # If omega is provided, use omega to choose top pairs.
+    if ((0 < omega) & (omega < 1)){
+    omega_ls <- c()
+    for (i in 1:(length(input_batches) - 1)) { # If only a single value of omega is provided, all the query batches use the same omega
+      omega_ls <- append(omega_ls, omega)
+    }
+    top_pairs_prop <- omega_ls
+    } else {
+      stop("The provided omega is not within 0 and 1")
+    }
+  } else { # If omega is given as a list object.
     omega_ls <- c()
     for (i in 1:length(omega)) {
       omega_ls <- append(omega_ls, omega[[i]])
@@ -115,7 +126,7 @@ SCIBER <- function(input_batches,
     } else if (!all(0 < omega_ls & omega_ls < 1)){
       stop("Some omega(s) is(are) not within the range (0, 1)")
     } else {
-      top_pairs_prop <- omega
+      top_pairs_prop <- omega_ls
     }
   }
 

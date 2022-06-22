@@ -7,7 +7,7 @@ Description: Remove batch effects by projecting query batches into the reference
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 LazyData: true
 URL: https://github.com/RavenGan/SCIBER
 BugReports: https://github.com/RavenGan/SCIBER/issues

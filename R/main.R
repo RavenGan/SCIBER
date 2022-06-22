@@ -27,7 +27,7 @@ globalVariables(c("cluster_assignment" # used in the newly created metadata
 #' res <- SCIBER_int(input_batches = exp, ref_index = 1,
 #' batches_meta_data = meta, omega = omega, n_core = 1)
 
-SCIBER_int <- function(input_batches,
+SCIBER <- function(input_batches,
                        ref_index = NULL,
                        batches_meta_data = NULL,
                        omega = NULL,

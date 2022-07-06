@@ -18,5 +18,13 @@ Imports:
 Depends: 
     R (>= 2.10)
 Suggests: 
-    testthat (>= 3.0.0)
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    cowplot,
+    ggplot2,
+    ggthemes,
+    Matrix,
+    uwot
 Config/testthat/edition: 3
+VignetteBuilder: knitr

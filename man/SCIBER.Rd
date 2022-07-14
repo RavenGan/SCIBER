@@ -10,7 +10,7 @@ SCIBER(
   batches_meta_data = NULL,
   omega = 0.5,
   alpha = 0.05,
-  h_fisher = 50,
+  h_fisher = 75,
   n_core = parallel::detectCores(),
   seed = 7,
   k = NULL
@@ -46,7 +46,7 @@ data(HumanDC)
 exp <- HumanDC[["exp"]]
 meta <- HumanDC[["metadata"]]
 omega <- c()
-omega[[1]] <- 0.6
+omega[[1]] <- 0.5
 res <- SCIBER(input_batches = exp, ref_index = 1,
 batches_meta_data = meta, omega = omega, n_core = 1)
 }

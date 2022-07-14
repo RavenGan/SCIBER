@@ -4,7 +4,7 @@ data("HumanDC")
 exp <- HumanDC[["exp"]]
 meta <- HumanDC[["metadata"]]
 omega <- c()
-omega[[1]] <- 0.6
+omega[[1]] <- 0.5
 
 res <- SCIBER(input_batches = exp, ref_index = 1,
                   batches_meta_data = meta, omega = omega, n_core = 1)

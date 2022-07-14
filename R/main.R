@@ -8,7 +8,6 @@ globalVariables(c("cluster_assignment" # used in the newly created metadata
 #' @param ref_index The index of the reference batch in the object "input_batches"
 #' @param batches_meta_data A list contains the meta data for all the batches. The order should be consistent with that in "input_batches". Each meta data contains three columns, "cell_id", "cell_type", and "dataset". "dataset" indicates which batch the data comes from. The row names of meta data should match the column names of batch.
 #' @param omega A list of proportion of matched clusters or a single value between 0 and 1 applied to all query batches.
-#' @param alpha The significance level for all clusters to choose the number of matched clusters. The default is 0.05.
 #' @param h_fisher The number of marker genes used for Fisher exact test.
 #' @param n_core Specify the number of cores otherwise use all the available cores.
 #' @param seed random seed.
@@ -31,7 +30,6 @@ SCIBER <- function(input_batches,
                        ref_index = NULL,
                        batches_meta_data = NULL,
                        omega = 0.5,
-                       alpha = 0.05,
                        h_fisher = 75,
                        n_core = parallel::detectCores(),
                        seed = 7,
@@ -99,11 +97,7 @@ SCIBER <- function(input_batches,
   # Check the top_pairs_prop
   # If omega is not provided
   if (is.null(omega)){
-    if((0 < alpha) & (alpha < 1)){
-      top_pairs_prop <- alpha # Use the significance level to choose top pairs.
-    } else {
-      stop("The provided alpha is not within 0 and 1")
-    }
+    stop("Please provide a valid omega")
   } else if (is.numeric(omega)){
     # If omega is provided, use omega to choose top pairs.
     if ((0 < omega) & (omega < 1)){

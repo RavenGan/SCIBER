@@ -9,7 +9,6 @@ SCIBER(
   ref_index = NULL,
   batches_meta_data = NULL,
   omega = 0.5,
-  alpha = 0.05,
   h_fisher = 75,
   n_core = parallel::detectCores(),
   seed = 7,
@@ -24,8 +23,6 @@ SCIBER(
 \item{batches_meta_data}{A list contains the meta data for all the batches. The order should be consistent with that in "input_batches". Each meta data contains three columns, "cell_id", "cell_type", and "dataset". "dataset" indicates which batch the data comes from. The row names of meta data should match the column names of batch.}
 
 \item{omega}{A list of proportion of matched clusters or a single value between 0 and 1 applied to all query batches.}
-
-\item{alpha}{The significance level for all clusters to choose the number of matched clusters. The default is 0.05.}
 
 \item{h_fisher}{The number of marker genes used for Fisher exact test.}
 

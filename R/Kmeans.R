@@ -1,8 +1,8 @@
-#------#------#------#------#------#------#------#------#------#------
+#------#------#------#------#------#------#------#------#------
 # functions in this file:
 # obtain_clustered_data: K-means clustering
 # obtain_new_meta_data: obtain new meta_data for each batch
-#------#------#------#------#------#------#------#------#------#------
+#------#------#------#------#------#------#------#------#------
 
 obtain_clustered_data <- function(ref_index, batches_clean, K, numCores = parapllel::detectCores()){
   numCores <- numCores

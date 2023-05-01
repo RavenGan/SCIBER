@@ -3,3 +3,5 @@
 ^LICENSE\.md$
 ^README\.Rmd$
 ^random
+^CRAN-SUBMISSION$
+^cran-comments\.md$

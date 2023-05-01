@@ -138,8 +138,9 @@ obtain_cellID_from_top_pair_core <- function(dataset1_dataset2_top, new_meta_dat
   for (i in 1:nrow(dataset1_dataset2_top)){
     row_index <- dataset1_dataset2_top[i, 1]
     col_index <- dataset1_dataset2_top[i, 2]
-    dataset1_cluster <- dplyr::filter(new_meta_data_dataset1, cluster_assignment == col_index)
-    dataset2_cluster <- dplyr::filter(new_meta_data_dataset2, cluster_assignment == row_index)
+    dataset1_cluster <- new_meta_data_dataset1[which(new_meta_data_dataset1$cluster_assignment == col_index), , drop = FALSE]
+    dataset2_cluster <- new_meta_data_dataset2[which(new_meta_data_dataset2$cluster_assignment == row_index), , drop = FALSE]
+
     rownames(dataset1_cluster) <- dataset1_cluster$cell_id
     rownames(dataset2_cluster) <- dataset2_cluster$cell_id
 

@@ -1,7 +1,7 @@
 Package: SCIBER
 Type: Package
 Title: Single-Cell Integrator and Batch Effect Remover
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: c(person(given = "Dailin", family = "Gan", role = c("aut", "cre"), email = "dgan@nd.edu", comment = c(ORCID = "0000-0003-0535-1259")), person(given = "Jun", family = "Li", role = "aut"))
 Description: Remove batch effects by projecting query batches into the reference batch space.
 License: MIT + file LICENSE

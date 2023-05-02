@@ -32,6 +32,8 @@ devtools::install_github("RavenGan/SCIBER")
 ## Example
 The following example uses the pre-processed Human dendritic cell dataset [1] to perform batch integration. 
 
+Please note that for each data frame in the object `meta`, there should be two columns named `cell_id` and `cell_type`. For instance, let `meta_i` be a data frame under `meta`, and there should be two columns `meta_i$cell_id` and `meta_i$cell_type`. If the cell type information is not available, any values put in `meta_i$cell_type` should work.
+
 ```{r example}
 library(SCIBER)
 rm(list = ls())

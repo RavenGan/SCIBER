@@ -41,7 +41,13 @@ We downloaded two batches of Human dendritic cell data from this paper
 *Villani, A. C., Satija, R., Reynolds, G., Sarkizova, S., Shekhar, K., Fletcher, J., … & Hacohen, N. (2017). Single-cell RNA-seq reveals new types of human blood dendritic cells, monocytes, and progenitors. Science, 356(6335), eaah4573.*
 
 We library normalized the cells, log transformed the counts, and selected top 500 highly variable genes for each batch. We pooled all the genes 
-and use them as the genes for both batches. The pre-processed data are available as part of this package.
+and use them as the genes for both batches. The pre-processed data are available as part of this package. 
+
+Please note that for each data frame in the object `meta`, there should
+be two columns named `cell_id` and `cell_type`. For instance, let
+`meta_i` be a data frame under `meta`, and there should be two columns
+`meta_i$cell_id` and `meta_i$cell_type`. If the cell type information is
+not available, any values put in `meta_i$cell_type` should work.
 
 ```{r}
 data("HumanDC")

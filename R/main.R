@@ -103,7 +103,7 @@ SCIBER <- function(input_batches,
     if ((0 < omega) & (omega < 1)){
     omega_ls <- c()
     for (i in 1:(length(input_batches) - 1)) { # If only a single value of omega is provided, all the query batches use the same omega
-      omega_ls <- append(omega_ls, omega)
+      omega_ls[[i]] <- omega
     }
     top_pairs_prop <- omega_ls
     } else {
@@ -112,12 +112,12 @@ SCIBER <- function(input_batches,
   } else { # If omega is given as a list object.
     omega_ls <- c()
     for (i in 1:length(omega)) {
-      omega_ls <- append(omega_ls, omega[[i]])
+      omega_ls[[i]] <- omega[[i]]
     }
 
     if ((length(omega_ls)+1) != length(input_batches)){
       stop("The length of ", omega, " does not match the number of query batches.")
-    } else if (!all(0 < omega_ls & omega_ls < 1)){
+    } else if (!all(0 < unlist(omega_ls) & unlist(omega_ls) < 1)){
       stop("Some omega(s) is(are) not within the range (0, 1)")
     } else {
       top_pairs_prop <- omega_ls
